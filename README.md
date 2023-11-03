@@ -1,2 +1,2 @@
 # drone_ultrassonico
-Mensurar distâncias de uma sala retangular em qualquer posição utlizando principalemnte de um sensor ultrassonico.
+Mensura distâncias de uma sala retangular em qualquer posição utlizando principalmente de um sensor ultrassonico.
