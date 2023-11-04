@@ -13,7 +13,7 @@ Data de término: xx/xx/xxxx
 
 
   Serial.begin(9600);
-	pinMode(trig, OUTPUT);
+	pinMode(trig, OUTPUT); //Cometário de exemplo
 	pinMode(echo, INPUT);
 
 }
