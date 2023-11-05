@@ -13,7 +13,7 @@ Data de término: xx/xx/xxxx
 
 
   Serial.begin(9600);
-	pinMode(trig, OUTPUT); //Cometário de exemplo para a Cleide
+	pinMode(trig, OUTPUT); //Comentário de exemplo para a Cleide
 	pinMode(echo, INPUT);
 
 }
