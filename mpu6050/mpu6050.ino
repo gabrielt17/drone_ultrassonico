@@ -10,5 +10,7 @@ void sinalGiroscopio(void) {    // Inicia comunicação com sensor no seu
   Wire.write(0x05);
   Wire.endTransmission();
 
+  //Embassado demais isso
+
 
 }
