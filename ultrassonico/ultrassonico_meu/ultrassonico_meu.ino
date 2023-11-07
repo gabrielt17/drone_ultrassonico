@@ -8,31 +8,45 @@ Data de término: xx/xx/xxxx
 * Precisão: 3 mm
 */
 
-#define trig  1//Dá apelido ao pino Trigger
-#define echo 2//Dá apelido ao pino Echo
+//Início do código:
 
+//Definir os pinos que vão ser usados do Esp32:
+const int trigPin = 12;
+const int echoPin = 14;
 
-  Serial.begin(9600);
-	pinMode(trig, OUTPUT);
-	pinMode(echo, INPUT);
+//Definindo a velocidade do som em cm/uS (funções)
 
+#define Velocidade_Som 0.034
+
+long duracao;
+float distanceCm;
+
+//Chamada de funções - rodar 
+
+void setup() {
+  Serial.begin(115200); //Começa a comunicação serial
+  pinMode(trigPin, OUTPUT); //Seta trigPin como saída
+  pinMode(echoPin, INPUT); //Seta echoPin como entrada
 }
-
-float distancia(void) {
-	digitalWrite(trig, LOW);
-	delay(60); // Recomendação de 60 ms entre ciclos
-	digitalWrite(trig, HIGH);
-	delayMicroseconds(10); // Tempo para que a onda seja enviada
-	digitalWrite(trig, LOW);
-	float tempoalto = pulseIn(echo, HIGH); // Mensura o tempo em que o pino echo
-                                        // está em nível alto
-	float distancia = tempoalto*340/2; //Tempo em nível alto * velocidade do ar
-	return distancia;
-}
-
 
 void loop() {
-  Serial.print(distancia());
-  
+  //Limpar a saída
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  //Setar a saída para alto por 10 micro segundos
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
 
+  //Ler a entrada e retonar o tempo de duração da onda em micro segundos
+  duracao = pulseIn(echoPin, HIGH);
+
+  //Calcular a distância
+  distanceCm = duracao*Velocidade_Som/2;
+
+  //Imprimir a distância do Monitor Serial
+  Serial.print("Distância (cm): ");
+  Serial.printIn(distanceCm);
+
+  delay(500);
 }
