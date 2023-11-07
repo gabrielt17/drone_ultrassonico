@@ -7,32 +7,62 @@ Data de término: xx/xx/xxxx
 * Raio de medição: 2 cm ~ 400 cm
 * Precisão: 3 mm
 */
+#include <Arduino.h>
+#define trig 21 // Associa o pino 21 ao pino Trigger
+#define echo 12 // Associa o pino 12 ao pino Echo
 
-#define trig  1//Dá apelido ao pino Trigger
-#define echo 2//Dá apelido ao pino Echo
 
-
-  Serial.begin(9600);
+void setup() {
 	pinMode(trig, OUTPUT);
 	pinMode(echo, INPUT);
-
-}
-
-float distancia(void) {
-	digitalWrite(trig, LOW);
-	delay(60); // Recomendação de 60 ms entre ciclos
-	digitalWrite(trig, HIGH);
-	delayMicroseconds(10); // Tempo para que a onda seja enviada
-	digitalWrite(trig, LOW);
-	float tempoalto = pulseIn(echo, HIGH); // Mensura o tempo em que o pino echo
-                                        // está em nível alto
-	float distancia = tempoalto*340/2; //Tempo em nível alto * velocidade do ar
-	return distancia;
+  Serial.begin(9600);
 }
 
 
 void loop() {
-  Serial.print(distancia());
-  
+  Serial.print("Distância: ");
+  Serial.print(distanciaCm());
+  Serial.println(" cm");
+  Serial.print("Distância: ");
+  Serial.print(distanciaMetro());
+  Serial.println(" m");             
+  delay(600);
+}
 
+float distanciaCm(void) {
+  digitalWrite(trig, LOW);
+  delay(60); // Recomendação de 60 ms entre ciclos
+  digitalWrite(trig, HIGH);
+  // Intervalo de empo mínimo para que a onda seja enviada
+  delayMicroseconds(10); 
+  digitalWrite(trig, LOW);
+
+  // Mensura os intervalos de tempo entre o último momento que o
+  float tempoalto = pulseIn(echo, HIGH);
+  float velsom = 0.0003403; // Velocidade do som em microssegundos
+  float distancia = tempoalto*velsom*50; // Tempo em nível alto * velocidade do ar/2
+  if (distancia >= 400){
+    return -1;
+  }
+  else
+    return distancia;
+}
+
+float distanciaMetro(void) {
+  digitalWrite(trig, LOW);
+  delay(60); // Recomendação de 60 ms entre ciclos
+  digitalWrite(trig, HIGH);
+  // Intervalo de empo mínimo para que a onda seja enviada
+  delayMicroseconds(10); 
+  digitalWrite(trig, LOW);
+
+  // Mensura os intervalos de tempo entre o último momento que o
+  float tempoalto = pulseIn(echo, HIGH);
+  float velsom = 0.0003403; // Velocidade do som em microssegundos
+  float distancia = tempoalto*velsom*50; // Tempo em nível alto * velocidade do ar/2
+  if (distancia >= 400){
+    return -1;
+  }
+  else
+    return (distancia/100);
 }
