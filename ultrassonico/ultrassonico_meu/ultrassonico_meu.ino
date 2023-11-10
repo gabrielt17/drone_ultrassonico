@@ -19,7 +19,7 @@ const int echoPin = 14;
 #define Velocidade_Som 0.034
 
 long duracao;
-float distanceCm;
+float distanciaCm;
 
 //Chamada de funções - rodar 
 
@@ -42,11 +42,11 @@ void loop() {
   duracao = pulseIn(echoPin, HIGH);
 
   //Calcular a distância
-  distanceCm = duracao*Velocidade_Som/2;
+  distanciaCm = duracao*Velocidade_Som/2;
 
   //Imprimir a distância do Monitor Serial
   Serial.print("Distância (cm): ");
-  Serial.printIn(distanceCm);
+  Serial.printIn(distanciaCm);
 
   delay(500);
 }
