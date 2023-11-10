@@ -46,7 +46,7 @@ void loop() {
 
   //Imprimir a distância do Monitor Serial
   Serial.print("Distância (cm): ");
-  Serial.printIn(distanciaCm);
+  Serial.print(distanciaCm);
 
   delay(500);
 }
